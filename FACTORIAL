@@ -1,0 +1,35 @@
+// lab 3.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include "stdlib.h"
+
+using namespace std;
+
+　
+int fac (int n);
+int comb (int n, int r);
+
+void main ();
+{
+	float c;
+	int n,r;
+	cout<<"\n Ingrese el valor de n:";
+	cin>> n;
+	do{ 
+		cout<<"\n Ingrese el valor de r:";
+		cin>>r;
+	}while(r<n);
+	c=comb(n,r);
+	cout<<"\n la combinatoria es:" <<c;
+}
+getch ()
+
+	int fac(int n)
+	int i=1, int p=1 
+	  for (i=1; i<=n; i++)
+		  p=p=p*i;
+return p;
+}
