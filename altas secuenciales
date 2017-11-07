@@ -1,0 +1,86 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include "conio.h"
+
+using namespace std;
+
+FILE *alias;
+
+
+struct tipo_registro // struct que equivale a un tipo de dato 
+{ 
+	int no_prod; 
+    string descrip; 
+    int cantidad; 
+    float precio; 
+    char garantia; 
+
+}; 
+
+ tipo_registro     Registro; // es una variable de tipo struct 
+
+ void ALTA_SECUENCIAL ();
+
+ void main()
+ {
+	 ALTA_SECUENCIAL ();
+	 getch ();
+
+ }
+
+
+
+
+
+void ALTA_SECUENCIAL(void) 
+{ 
+  int no_prod;  // Variable local para el numero de producto 
+  system("cls"); // ejecutar un comando del sistema operativo de window
+  cout << "\n\t ALTAS DE REGISTROS DE PRODUCTOS"; 
+  alias=fopen("PRODUCTO.SEC","rb+"); // Intenta abrir el archivo  
+                                     // en modo de lectura/escritura 
+  if(alias==NULL) 
+    alias=fopen("PRODUCTO.SEC","wb"); // Crea el archivo en caso de no 
+                                      // existir 
+  cout << "\n\n\n\tNumero de producto: "; 
+  cin >> no_prod; //num de prod es conciderada clave primaria 
+
+  //zona de control
+  cin.ignore();
+  fread(&Registro,sizeof(Registro),1,alias); 
+  // Lee el "Registro", de tamano=sizeof(Registro) del archivo "alias" //sizeof cuantos bytes tiene el struct
+  while(!feof(alias)) // Ciclo mientras no se encuentre el final del 
+                      // alias - archivo 
+			
+  { 
+    if(Registro.no_prod==no_prod) 
+    { 
+       cout << "\n\n\n\tRegistro duplicado !!!"; 
+       fclose(alias); // cierra el buffer 
+       getch(); 
+       return;  // regresa al programa principal 
+
+    } 
+    fread(&Registro,sizeof(Registro),1,alias); 
+  } 
+
+  cout << "\n\tDescripcion: ";
+  getline(cin,Registro.descrip); 
+  cout << "\n\tCantidad   : "; 
+  cin >> Registro.cantidad; 
+  cout << "\n\tPrecio     : ";
+  cin >> Registro.precio; 
+  do 
+  { 
+    cout << "\n\tGarantia   : ";
+	Registro.garantia=toupper(getch()); 
+  }while(Registro.garantia!='S' && Registro.garantia!='N'); 
+  Registro.no_prod=no_prod; 
+  fwrite(&Registro,sizeof(Registro),1,alias); // Grabar el Registro  
+  fclose(alias); // Cierra el archivo 
+  cout << "\n\n\n\tProducto registrado !!!"; 
+  cout << "\n\t<<< Oprima cualquier tecla para continuar >>>"; 
+  getch(); 
+  return; 
+} 
